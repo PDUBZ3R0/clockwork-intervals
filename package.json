@@ -5,11 +5,12 @@
   "browser": "dist/clockwork-intervals.js",
   "main": "source/node-main.js",
   "scripts": {
-    "build": "node squish.js source/index.js dist/clockwork-intervals.js"
+    "build": "./squish.js source/index.js dist/clockwork-intervals.js --minify false"
   },
   "author": "Paul Wardrip <pwardrip@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "terser": "^5.22.0"
+    "terser": "^5.22.0",
+    "commander": "^11.1.0"
   }
 }
