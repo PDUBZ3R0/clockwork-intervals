@@ -1,0 +1,15 @@
+{
+  "name": "clockwork-tntervals",
+  "version": "0.1.1",
+  "description": "Manages timers (setInterval / setTimeout) and stopwatches (start, check, stop) with support for accurate timing in browser tabs that don't have focus.",
+  "browser": "dist/clockwork-intervals.js",
+  "main": "source/node-main.js",
+  "scripts": {
+    "build": "node squish.js source/index.js dist/clockwork-intervals.js"
+  },
+  "author": "Paul Wardrip <pwardrip@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "terser": "^5.22.0"
+  }
+}
