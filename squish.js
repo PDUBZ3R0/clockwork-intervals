@@ -15,9 +15,8 @@ function assimilate(name, code, type, matcher) {
                 let raw = fs.readFileSync(file, "utf-8");
                 let content = await squish(file, raw);
                 if (type === "require") content = content.replace(/module\.exports.*$/, '')
-                let skinny = await minify(content);
-          //      console.log(skinny);
-                let output = (type === "worker") ? "`" + skinny.code + "`" : skinny.code
+
+                let output = (type === "worker") ? "`" + await minify(content).code + "`" : content
           //      console.log(check[0], output);
                 let recode = code.replace(check[0], output);
                 let recurse = await assimilate(name, recode, type, matcher)
