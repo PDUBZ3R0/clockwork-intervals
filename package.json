@@ -5,7 +5,7 @@
   "browser": "dist/clockwork-intervals.js",
   "main": "source/node-main.js",
   "scripts": {
-    "build": "./squish.js source/index.js dist/clockwork-intervals.js --minify false"
+    "build": "./squish.js source/index.js dist/clockwork-intervals.js"
   },
   "author": "Paul Wardrip <pwardrip@gmail.com>",
   "license": "ISC",

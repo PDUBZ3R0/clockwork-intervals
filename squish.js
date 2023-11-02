@@ -4,25 +4,11 @@ const fs = require("fs");
 const {minify} = require("terser");
 const {program} = require("commander")
 
-let minify_active = true
-
-mini = function (input) {
-    return new Promise(resolve => {
-        if (!minify_active) {
-            resolve (input)
-        } else {
-            minify(input).then(result => resolve(result.code));
-        }
-    });
-};
-
-program.option("--minify [enabled]", "minify results", true);
 program.argument("<input>")
 program.argument("<output>")
 program.action((input, output, options)=> {
     console.log(`Input file: ${input}`)
     let mainfile = fs.readFileSync(path.resolve(input), "utf-8");
-    minify_active = options.minify;
 
     (async()=> {
         let final = await squish(input, mainfile);
@@ -45,8 +31,12 @@ function assimilate(name, code, type, matcher) {
                 let content = await squish(file, raw);
                 if (type === "require") content = content.replace(/module\.exports.*$/, '')
 
-                let output = (type === "worker") ? "`" + await mini(content) + "`" : content
-          //      console.log(check[0], output);
+                let output;
+                if (type === "worker") {
+                    output = "`" + (await minify(content)).code + "`";
+                } else {
+                    output = content;
+                }
                 let recode = code.replace(check[0], output);
                 let recurse = await assimilate(name, recode, type, matcher)
                 resolve(recurse);
@@ -64,8 +54,7 @@ function squish(name,source) {
          //   console.log("squish require:", changed ? changed.length : 0)
             changed = await assimilate(name,changed, "worker", /"(squish:)\/\/(.*\.js)"/);
          //   console.log("squish worker:", changed ? changed.length : 0)
-            let final = await mini(changed);
-            resolve(final);
+            resolve(changed);
         })()
     })
 }

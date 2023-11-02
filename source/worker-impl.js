@@ -1,17 +1,18 @@
 function workerImpl(tagger) {
     const code = "squish://worker.js"
-    let worker = createWorker(code);
 
-    function createWorker(code) {
+    function createWorker() {
         const blob = new Blob([code], {type: 'application/javascript'})
-        worker = new Worker(URL.createObjectURL(blob));
-        worker.addEventListener("message", function (e) {
+        let _w = new Worker(URL.createObjectURL(blob));
+        _w.addEventListener("message", function (e) {
             const {task, repeats} = tagger.load(e.id)
             if (!repeats) tagger.remove(e.id);
             task();
         });
-        return worker;
+        return _w;
     }
+
+    let worker = createWorker();
 
     return {
         setInterval (task, milliseconds) {
