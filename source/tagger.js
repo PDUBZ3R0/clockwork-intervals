@@ -1,4 +1,5 @@
-const tagger = (_ => {
+
+export default tagger = (()=>{
 
     let intervals = 0;
     let tasks = {};
@@ -28,5 +29,3 @@ const tagger = (_ => {
         }
     }
 })()
-
-module.exports = tagger;

@@ -1,10 +1,12 @@
-function workerImpl(tagger) {
-    const code = "squish://worker.js"
-    let worker = createWorker(code);
 
-    function createWorker(code) {
-        const blob = new Blob([code], {type: 'application/javascript'})
-        worker = new Worker(URL.createObjectURL(blob));
+import workingbitch from './worker.js'
+
+export default tagger=> {
+    let worker = createWorker();
+
+    function createWorker() {
+        worker = new Worker(workingbitch);
+
         worker.addEventListener("message", function (e) {
             const {task, repeats} = tagger.load(e.id)
             if (!repeats) tagger.remove(e.id);
@@ -32,5 +34,3 @@ function workerImpl(tagger) {
         }
     }
 }
-
-module.exports = workerImpl

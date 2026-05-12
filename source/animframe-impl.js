@@ -1,4 +1,5 @@
-function animframeImpl(tagger) {
+
+export default tagger => {
     let running = false;
     let processing = false;
     let tasks = {};
@@ -41,6 +42,7 @@ function animframeImpl(tagger) {
         concurrency++
         running = true;
         start();
+        return id;
     }
 
     function clear(id) {
@@ -64,5 +66,3 @@ function animframeImpl(tagger) {
         clearInterval: clear
     }
 }
-
-module.exports = animframeImpl
